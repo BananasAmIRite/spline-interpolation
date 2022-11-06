@@ -1,7 +1,7 @@
 import Interpolator from "../Interpolator.js";
 import Utils from '../Utils.js'; 
 
-export default class CubicInterpolator extends Interpolator {
+export default class ImprovedCubicInterpolator extends Interpolator {
     constructor(initialSlope, initialPoints = []) {
         super(initialSlope, initialPoints, 2); 
     }
@@ -9,12 +9,17 @@ export default class CubicInterpolator extends Interpolator {
         const slopeFactor = 0.001; 
         // const lastEq = this.equations[this.equations.length - 1]?.eq; 
 
+        // slope is zero at every point
+
         // document.getElementById('abc').innerHTML = `${lastPoint}; ${point}; ${nextPoint}`;
 
         const m1 = Utils.slope(lastPoint, point);
         const m2 = Utils.slope(point, nextPoint); 
 
-        const avgM = (m1+m2)/2; 
+        const percent = (Utils.dist(lastPoint, point))/(Utils.dist(lastPoint, point)+Utils.dist(point, nextPoint)); 
+        console.log(percent);
+
+        const avgM = m1+percent*(m2-m1);  
 
         const lastEq = equations[equations.length - 1]?.eq; 
         // eq slope

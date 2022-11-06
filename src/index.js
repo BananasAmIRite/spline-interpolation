@@ -1,13 +1,12 @@
 // import CubicInterpolator from './interpolators/CubicInterpolator.js'; 
-// import QuadraticInterpolator from './interpolators/QuadraticInterpolator.js';
-import { isNull } from 'mathjs';
-import HenryCubicInterpolator from './interpolators/HenryCubicInterpolator.js'; 
+// import QuadraticInterpolator from './interpolators/QuadraticInterpolator.js'; 
+import CubicInterpolator from './interpolators/HenryCubicInterpolator.js'; 
 
 const createPointPlotter = (canvas, renderInterval) => {
     let points = []; 
     let t = 0; 
-    const interpolatorX = new HenryCubicInterpolator(0); 
-    const interpolatorY = new HenryCubicInterpolator(0); 
+    const interpolatorX = new CubicInterpolator(0); 
+    const interpolatorY = new CubicInterpolator(0); 
 
     document.getElementById('abc').innerHTML = "a";
 
@@ -20,17 +19,10 @@ const createPointPlotter = (canvas, renderInterval) => {
         ctx.beginPath(); 
 
         for (let i = 0; i < t-1; i += renderInterval) {
-            // document.getElementById("abc").innerHTML += " " + i; 
-            // const x = interpolatorX.getPointAt(i); 
-            // const y = interpolatorY.getPointAt(i); 
-
-            // if (x === ull || y ===)
             ctx.lineTo(
-                // i, 
                 interpolatorX.getPointAt(i), 
-                canvas.height - interpolatorY.getPointAt(i));
-            // document.getElementById("abc").innerHTML += `\n${interpolatorX.getPointAt(i)}, ${interpolatorY.getPointAt(i)}`;
-            // a.push([interpolatorX.getPointAt(i), canvas.height - interpolatorY.getPointAt(i)]);  
+                canvas.height - interpolatorY.getPointAt(i)
+            ); 
         }
         ctx.stroke(); 
 
@@ -66,8 +58,8 @@ try {
     // plotPoint(150, 150); 
     // plotPoint(251, 150); 
     // plotPoint(250, 100); 
-    // // plotPoint(251, 0); 
-    // // plotPoint(251, 0); 
+    // plotPoint(251, 0); 
+    // plotPoint(251, 0); 
 } catch (err) {
     document.getElementById('abc').innerHTML = `${err.lineNumber} ${err}`; 
 }
